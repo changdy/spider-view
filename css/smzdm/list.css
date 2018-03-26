@@ -22,19 +22,14 @@
 }
 
 
-
-#feed-wrap .feed-main-con {
+#feed-main-list {
+    border-top: 1px solid #f5f5f5;
     position: relative;
-    padding-bottom: 5px;
+    padding: 0 14px 5px;
     background-color: #fff;
     margin-top: 0;
     float: left;
     width: 858px;
-}
-
-#feed-main-list {
-    padding: 0 14px;
-    border-top: 1px solid #f5f5f5;
 }
 
 #feed-main-list > li {
@@ -74,7 +69,7 @@
     color: #f04848;
 }
 
-#feed-main-list.feed-list-hits .z-feed-img {
+#feed-main-list .z-feed-img {
     position: relative;
 }
 
@@ -103,7 +98,7 @@
     vertical-align: middle;
 }
 
-#feed-main-list.feed-list-hits .z-feed-img .z-black-mark, #feed-main-list.feed-list-hits .z-feed-img .z-gray-mark, #feed-main-list.feed-list-hits .z-feed-img .z-red-mark, #feed-main-list.feed-list-hits .z-feed-img a[class^=z-tag-] {
+#feed-main-list .z-feed-img .z-black-mark, #feed-main-list .z-feed-img .z-gray-mark, #feed-main-list .z-feed-img .z-red-mark, #feed-main-list .z-feed-img a[class^=z-tag-] {
     position: absolute;
     left: 0;
     top: 4px;
@@ -145,7 +140,7 @@
     overflow: visible;
 }
 
-#feed-main-list.feed-list-hits > li .feed-block-info {
+#feed-main-list > li .feed-block-info {
     height: 16px;
     margin-top: 9px;
     margin-bottom: 20px;
@@ -170,7 +165,7 @@
     margin-right: 10px;
 }
 
-#feed-main-list.feed-list-hits > li .feed-block-descripe {
+#feed-main-list > li .feed-block-descripe {
     margin-bottom: 26px;
 }
 
@@ -276,6 +271,10 @@
     text-align: center;
 }
 
+.feed-link-btn-inner:hover {
+    border-color: #f16969;
+}
+
 .feed-link-btn-inner .z-btn-red {
     margin: -1px -1px 5px;
     border-radius: 0;
@@ -326,7 +325,7 @@
     color: #fff;
 }
 
-#feed-main-list.feed-list-hits > li .z-group-data {
+#feed-main-list > li .z-group-data {
     position: relative;
 }
 
