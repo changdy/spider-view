@@ -7,6 +7,7 @@
     <link type="text/css" rel="stylesheet" href="/css/smzdm/common.css"/>
     <link type="text/css" rel="stylesheet" href="/css/smzdm/icons.css"/>
     <link type="text/css" rel="stylesheet" href="/css/smzdm/list.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/smzdm/search-box.css"/>
     <link href="https://cdn.bootcss.com/Buttons/2.0.0/css/buttons.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -14,30 +15,30 @@
 <body>
 <div class="content-inner">
     <div id="feed-wrap" class="z-clearfix">
-    	<div style="margin: 20px 0;">
+        <div id="search-box">
             <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown">
              <button class="button button-glow button-border button-rounded button-small button-primary">
                <i class="fa fa-bars"></i> 切换类型
              </button>
              <ul class="button-dropdown-list is-below">
-               <li><a href="javascript:" style="line-height:25px;padding-left:17px;">标题</a></li>
-               <li><a href="javascript:" style="line-height:25px;padding-left:17px;">目录</a></li>
+               <li><a href="javascript:">标题</a></li>
+               <li><a href="javascript:">目录</a></li>
              </ul>
-           </span> 
-           <input type="text" style="height: 16px; padding: 6px 12px; font-size: 12px; line-height: 1.4; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075); box-shadow: inset 0 1px 1px rgba(0,0,0,.075); -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s; -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;margin-left: 20px; width: 125px;"  placeholder="标题">
-           <input type="text" style="height: 16px; padding: 6px 12px; font-size: 12px; line-height: 1.4; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075); box-shadow: inset 0 1px 1px rgba(0,0,0,.075); -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s; -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;margin-left: 20px; width: 40px;"  placeholder="页码数">
-           <input type="text" style="height: 16px; padding: 6px 12px; font-size: 12px; line-height: 1.4; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075); box-shadow: inset 0 1px 1px rgba(0,0,0,.075); -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s; -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;margin-left: 20px; width: 40px;"  placeholder="点值数">
-           <input type="text" style="height: 16px; padding: 6px 12px; font-size: 12px; line-height: 1.4; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075); box-shadow: inset 0 1px 1px rgba(0,0,0,.075); -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s; -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;margin-left: 20px; width: 40px;"  placeholder="评论数">
+           </span>
+            <input type="text" class="search-input" style="width: 125px;" placeholder="标题">
+            <input type="text" class="search-input" placeholder="页码数">
+            <input type="text" class="search-input" placeholder="点值数">
+            <input type="text" class="search-input" placeholder="评论数">
             <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown" style="line-height:25px;  margin-left: 180px;">
              <button class="button button-glow button-border button-rounded button-small button-primary">
                <i class="fa fa-bars"></i> 切换排序
              </button>
              <ul class="button-dropdown-list is-below">
-               <li><a href="javascript:" style="line-height:25px;padding-left:17px;">时间</a></li>
-               <li><a href="javascript:" style="line-height:25px;padding-left:17px;">点赞</a></li>
+               <li><a href="javascript:">时间</a></li>
+               <li><a href="javascript:">点赞</a></li>
              </ul>
-           </span> 
-    	</div>
+           </span>
+        </div>
         <ul id="feed-main-list">
             <li v-for="item in items">
                 <h5 class="feed-block-title">
