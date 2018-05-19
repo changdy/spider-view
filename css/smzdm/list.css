@@ -271,10 +271,6 @@
     text-align: center;
 }
 
-.feed-link-btn-inner:hover {
-    border-color: #f16969;
-}
-
 .feed-link-btn-inner .z-btn-red {
     margin: -1px -1px 5px;
     border-radius: 0;
