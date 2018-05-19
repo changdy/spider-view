@@ -18,24 +18,24 @@
         <div id="search-box">
             <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown">
              <button class="button button-glow button-border button-rounded button-small button-primary">
-               <i class="fa fa-bars"></i> {{model}}
+               <i class="fa fa-bars"></i> {{searchModel}}
              </button>
              <ul class="button-dropdown-list is-below">
-               <li><a href="javascript:">标题</a></li>
-               <li><a href="javascript:">目录</a></li>
+               <li><a href="javascript:" @click="changeSearchModel('标题')">标题</a></li>
+               <li><a href="javascript:" @click="changeSearchModel('目录')">目录</a></li>
              </ul>
            </span>
-            <input type="text" class="search-input" style="width: 125px;" placeholder="标题">
-            <input type="text" class="search-input" placeholder="页码数">
-            <input type="text" class="search-input" placeholder="点值数">
-            <input type="text" class="search-input" placeholder="评论数">
+            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="标题">
+            <input type="number" v-model.number="pageIndex" class="search-input" placeholder="页码数">
+            <input type="number" v-model.number="worthCount" class="search-input" placeholder="点值数">
+            <input type="number" v-model.number="commentCount" class="search-input" placeholder="评论数">
             <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown" style="line-height:25px;  margin-left: 180px;">
              <button class="button button-glow button-border button-rounded button-small button-primary">
-               <i class="fa fa-bars"></i> 切换排序
+               <i class="fa fa-bars"></i> {{sortModel}}
              </button>
              <ul class="button-dropdown-list is-below">
-               <li><a href="javascript:" @click="changeSearchModel('time')">时间</a></li>
-               <li><a href="javascript:" @click="changeSearchModel('worthy')">点赞</a></li>
+               <li><a href="javascript:" @click="changeSortModel('时间')">时间</a></li>
+               <li><a href="javascript:" @click="changeSortModel('点赞')">点赞</a></li>
              </ul>
            </span>
         </div>
@@ -114,11 +114,22 @@
     let searchVue = new Vue({
         el: '#search-box',
         data: {
-            model: jsonItem,
+            searchModel: '标题',
+            sortModel: '时间',
+            words: '',
+            pageIndex: 1,
+            worthCount: 0,
+            commentCount: 0
         },
         methods: {
             changeSearchModel: function (type) {
-                console.log(type);
+                this.searchModel = type;
+            },
+            changeSortModel: function (type) {
+                this.sortModel = type;
+            },
+            changeSort: function () {
+
             }
         }
     });
