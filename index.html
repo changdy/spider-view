@@ -10,7 +10,8 @@
     <link type="text/css" rel="stylesheet" href="/css/smzdm/search-box.css"/>
     <link href="https://cdn.bootcss.com/Buttons/2.0.0/css/buttons.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
+    <link type="text/css" rel="stylesheet" href="/css/smzdm/icons.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/smzdm/category.css"/>
 </head>
 <body>
 <div class="content-inner">
@@ -25,10 +26,10 @@
                <li><a href="javascript:" @click="changeSearchModel('目录')">目录</a></li>
              </ul>
            </span>
-            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="标题">
-            <input type="number" v-model.number="pageIndex" class="search-input" placeholder="页码数">
-            <input type="number" v-model.number="worthCount" class="search-input" placeholder="点值数">
-            <input type="number" v-model.number="commentCount" class="search-input" placeholder="评论数">
+            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="标题" @keyup.enter="search">
+            <input type="number" v-model.number="pageIndex" class="search-input" placeholder="页码数" @keyup.enter="search">
+            <input type="number" v-model.number="worthCount" class="search-input" placeholder="点值数" @keyup.enter="search">
+            <input type="number" v-model.number="commentCount" class="search-input" placeholder="评论数" @keyup.enter="search">
             <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown" style="line-height:25px;  margin-left: 180px;">
              <button class="button button-glow button-border button-rounded button-small button-primary">
                <i class="fa fa-bars"></i> {{sortModel}}
@@ -38,6 +39,31 @@
                <li><a href="javascript:" @click="changeSortModel('点赞')">点赞</a></li>
              </ul>
            </span>
+        </div>
+        <div class="dropdown-con">
+            <ul class="drop-cate-list">
+                <li v-for="(index,item) in items" :data-id="item.ID" @mouseenter="hover(index)" :class="{ active: index == showIndex }">
+                    <a href="javascript:">
+                        <span class="z-icons" :class="'z-icon-' + item.url_nicktitle" ></span> {{item.title}}
+                    </a>
+                </li>
+            </ul>
+            <div class="dropdown-r">
+                <div v-for="(index,tempItem) in items"  class="drop-cate-wrap" :style="{ display: index == showIndex ? 'block':'none' }">
+                    <table class="drop-menus">
+                        <tbody>
+                        <tr v-for="(index2,children) in tempItem.child">
+                            <td class="drop-menu-title"   @click="choseAllItem(index,index2)" :class="{ 'category-selected': children.isActive }">
+                                <a href="javascript:" :data-id="children.ID">{{children.title}}</a><span class="split"></span>
+                            </td>
+                            <td class="drop-menu-items">
+                                <a href="javascript:" v-for="(index3,nodes) in children.child" :data-id="nodes.ID" @click="choseItem(index, index2, index3)" :class="{ 'category-selected': nodes.isActive||children.isActive}">{{nodes.title}}</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <ul id="feed-main-list">
             <li v-for="item in items">
@@ -89,6 +115,7 @@
 <script src="https://cdn.bootcss.com/moment.js/2.22.0/moment.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/Buttons/2.0.0/js/buttons.js"></script>
+<script src="/test.js"></script>
 <script>
     let jsonItem = [];
     let currentMomment = new moment();
@@ -117,9 +144,9 @@
             searchModel: '标题',
             sortModel: '时间',
             words: '',
-            pageIndex: 1,
-            worthCount: 0,
-            commentCount: 0
+            pageIndex: '',
+            worthCount: '',
+            commentCount: ''
         },
         methods: {
             changeSearchModel: function (type) {
@@ -130,6 +157,9 @@
             },
             changeSort: function () {
 
+            },
+            search: function () {
+                $.post('/article/proxy-list')
             }
         }
     });
