@@ -15093,7 +15093,6 @@ let temp = [
     }
 ];
 
-Vue.config.debug = true;
 let page = new Vue({
     el: '.dropdown-con',
     data: {
