@@ -15097,7 +15097,8 @@ let page = new Vue({
     el: '.dropdown-con',
     data: {
         items: [],
-        showIndex: 0
+        showIndex: 0,
+        currentSelected: 0
     },
     methods: {
         hover: function (index) {
@@ -15132,6 +15133,9 @@ let page = new Vue({
         },
         setItem: function (temp) {
             this.items = temp;
+        },
+        selectOne: function (categoryID) {
+            this.currentSelected = categoryID;
         }
     },
     computed: {
