@@ -40,7 +40,7 @@
              </ul>
            </span>
         </div>
-        <div class="dropdown-con" style="margin-left: 100px;top: 60px;" @click.stop="doThis">
+        <div class="dropdown-con" style="margin-left: 100px;top: 60px;" @click.stop>
             <ul class="drop-cate-list">
                 <li v-for="(index,item) in items" :data-id="item.ID" @mouseenter="hover(index)" :class="{ active: index == showIndex }">
                     <a href="javascript:">
@@ -166,6 +166,7 @@
                 $.postJSON('/article/proxy-list', {})
             },
             showCategory: function () {
+                console.log(this.searchModel);
                 if (this.searchModel === '目录') {
                     $('.dropdown-con').show();
                 }
