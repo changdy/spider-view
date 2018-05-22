@@ -70,13 +70,13 @@
                </span>
             </div>
             <ul id="feed-main-list">
-                <li v-for="item in items" v-if="item.worthy >= worthCount && item.comment >= commentCount">
+                <li v-for="item in items" v-show="item.worthy >= worthCount && item.comment >= commentCount">
                     <h5 class="feed-block-title">
                         <a :href="item.url">{{item.title}}<span class="z-highlight">{{item.price}}</span></a>
                     </h5>
                     <div class="feed-block z-hor-feed ">
                         <div class="z-feed-img">
-                            <a class="z-tag-guonei">{{item.type}}</a>
+                            <a class="z-tag-guonei" v-show="item.type">{{item.type}}</a>
                             <a href="https://www.smzdm.com/p/8950865/" target="_blank">
                                 <img :src="item.pic">
                             </a>
@@ -106,7 +106,8 @@
                                             <a :href="item.url" class="z-btn z-btn-red">去购买</a>
                                         </div>
                                     </div>
-                                    <span class="feed-block-extras">{{item.date}}<a href="http://www.smzdm.com/mall/amazon_jp/">{{item.mall}}</a></span>
+                                    <span class="feed-block-extras">{{item.date|timeHandler}}<a
+                                            href="http://www.smzdm.com/mall/amazon_jp/">{{item.mall}}</a></span>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +124,6 @@
 <script src="/js/commons.js"></script>
 <script src="/js/category.js"></script>
 <script>
-    let jsonItem = [];
     let currentMoment = new moment();
     let dayUnix = currentMoment.millisecond(0).second(0).minute(0).hour(0).valueOf();
     let yearUnix = new moment(String(currentMoment.year()), 'YYYY').valueOf();
@@ -136,7 +136,7 @@
             pageIndex: 1,
             worthCount: '',
             commentCount: '',
-            items: jsonItem
+            items: []
         },
         methods: {
             changeSearchModel: function (type) {
@@ -145,9 +145,15 @@
             },
             changeSortModel: function (type) {
                 this.sortModel = type;
-            },
-            changeSort: function () {
-
+                if (this.sortModel === '时间') {
+                    this.items = this.items.sort((a, b) => {
+                        return b.date - a.date;
+                    });
+                } else {
+                    this.items = this.items.sort((a, b) => {
+                        return b.worthy - a.worthy;
+                    });
+                }
             },
             search: function () {
                 $.postJSON('/article/proxy-list', {
