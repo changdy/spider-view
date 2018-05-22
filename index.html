@@ -16,31 +16,6 @@
 <body>
 <div class="content-inner">
     <div id="feed-wrap" class="z-clearfix">
-        <div id="search-box">
-            <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown">
-             <button class="button button-glow button-border button-rounded button-small button-primary">
-               <i class="fa fa-bars"></i> {{searchModel}}
-             </button>
-             <ul class="button-dropdown-list is-below">
-               <li><a href="javascript:" @click="changeSearchModel('标题')">标题</a></li>
-               <li><a href="javascript:" @click="changeSearchModel('目录')">目录</a></li>
-             </ul>
-           </span>
-            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="关键词" @keyup.enter="search" @click.stop="showCategory"
-                   :readonly="searchModel == '目录'">
-            <input type="number" v-model.number="pageIndex" class="search-input" placeholder="  页码数" @keyup.enter="search">
-            <input type="number" v-model.number="worthCount" class="search-input" placeholder="  点值数" @keyup.enter="search">
-            <input type="number" v-model.number="commentCount" class="search-input" placeholder="  评论数" @keyup.enter="search">
-            <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown" style="line-height:25px;  margin-left: 180px;">
-             <button class="button button-glow button-border button-rounded button-small button-primary">
-               <i class="fa fa-bars"></i> {{sortModel}}
-             </button>
-             <ul class="button-dropdown-list is-below">
-               <li><a href="javascript:" @click="changeSortModel('时间')">时间</a></li>
-               <li><a href="javascript:" @click="changeSortModel('点赞')">点赞</a></li>
-             </ul>
-           </span>
-        </div>
         <div class="dropdown-con" style="margin-left: 100px;top: 60px;" @click.stop>
             <ul class="drop-cate-list">
                 <li v-for="(index,item) in items" :data-id="item.ID" @mouseenter="hover(index)" :class="{ active: index == showIndex }">
@@ -68,50 +43,77 @@
                 </div>
             </div>
         </div>
-        <ul id="feed-main-list">
-            <li v-for="item in items" v-if="item.worthy >= searchVue.worthCount && item.comment >= searchVue.commentCount">
-                <h5 class="feed-block-title">
-                    <a :href="item.url">{{item.title}}<span class="z-highlight">{{item.price}}</span></a>
-                </h5>
-                <div class="feed-block z-hor-feed ">
-                    <div class="z-feed-img">
-                        <a class="z-tag-guonei">{{item.type}}</a>
-                        <a href="https://www.smzdm.com/p/8950865/" target="_blank">
-                            <img :src="item.pic">
-                        </a>
-                    </div>
-                    <div class="z-feed-content">
-                        <div class="feed-block-info">
-                            <!--<span>推荐人：艾美丽104</span>-->
-                            <!--<span class="feed-block-tags"> 标签：-->
-                            <!--<a href="http://www.smzdm.com/tag/%E9%94%85%E5%85%B7/haitao/">锅具</a>-->
-                            <!--<a href="http://www.smzdm.com/tag/%E6%97%A5%E6%9C%AC%E9%A6%86/haitao/">日本馆</a>-->
-                            <!--</span>-->
+        <div id="main-content">
+            <div id="search-box">
+                <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown">
+                 <button class="button button-glow button-border button-rounded button-small button-primary">
+                   <i class="fa fa-bars"></i> {{searchModel}}
+                 </button>
+                 <ul class="button-dropdown-list is-below">
+                   <li><a href="javascript:" @click="changeSearchModel('标题')">标题</a></li>
+                   <li><a href="javascript:" @click="changeSearchModel('目录')">目录</a></li>
+                 </ul>
+               </span>
+                <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="关键词" @keyup.enter="search" @click.stop="showCategory"
+                       :readonly="searchModel == '目录'">
+                <input type="number" v-model.number="pageIndex" class="search-input" placeholder="  页码数" @keyup.enter="search">
+                <input type="number" v-model.number="worthCount" class="search-input" placeholder="  点值数" @keyup.enter="search">
+                <input type="number" v-model.number="commentCount" class="search-input" placeholder="  评论数" @keyup.enter="search">
+                <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown" style="line-height:25px;  margin-left: 180px;">
+                 <button class="button button-glow button-border button-rounded button-small button-primary">
+                   <i class="fa fa-bars"></i> {{sortModel}}
+                 </button>
+                 <ul class="button-dropdown-list is-below">
+                   <li><a href="javascript:" @click="changeSortModel('时间')">时间</a></li>
+                   <li><a href="javascript:" @click="changeSortModel('点赞')">点赞</a></li>
+                 </ul>
+               </span>
+            </div>
+            <ul id="feed-main-list">
+                <li v-for="item in items" v-if="item.worthy >= worthCount && item.comment >= commentCount">
+                    <h5 class="feed-block-title">
+                        <a :href="item.url">{{item.title}}<span class="z-highlight">{{item.price}}</span></a>
+                    </h5>
+                    <div class="feed-block z-hor-feed ">
+                        <div class="z-feed-img">
+                            <a class="z-tag-guonei">{{item.type}}</a>
+                            <a href="https://www.smzdm.com/p/8950865/" target="_blank">
+                                <img :src="item.pic">
+                            </a>
                         </div>
-                        <div class="feed-block-descripe">{{item.content}}</div>
-                        <div class="z-feed-foot">
-                            <div class="z-feed-foot-l">
-                                    <span class="feed-btn-group">
-                                        <a href="javascript:" class="price-btn-up"><span class="unvoted-wrap"><i
-                                                class="z-icon-zhi"></i><span>{{item.worthy}}</span></span></a>
-                                        <a href="javascript:" class="price-btn-down"><span class="unvoted-wrap"><i class="z-icon-buzhi"></i><span>{{item.unworthy}}</span></span></a>
-                                    </span>
-                                <a class="z-group-data"><i class="z-icon-star-empty"></i><span>{{item.collection}}</span></a>
-                                <a href="https://www.smzdm.com/p/8950865/#comments" class="z-group-data"><i class="z-icon-comment"></i>{{item.comment}}</a>
+                        <div class="z-feed-content">
+                            <div class="feed-block-info">
+                                <!--<span>推荐人：艾美丽104</span>-->
+                                <!--<span class="feed-block-tags"> 标签：-->
+                                <!--<a href="http://www.smzdm.com/tag/%E9%94%85%E5%85%B7/haitao/">锅具</a>-->
+                                <!--<a href="http://www.smzdm.com/tag/%E6%97%A5%E6%9C%AC%E9%A6%86/haitao/">日本馆</a>-->
+                                <!--</span>-->
                             </div>
-                            <div class="z-feed-foot-r">
-                                <div class="feed-link-btn">
-                                    <div class="feed-link-btn-inner">
-                                        <a :href="item.url" class="z-btn z-btn-red">去购买</a>
-                                    </div>
+                            <div class="feed-block-descripe">{{item.content}}</div>
+                            <div class="z-feed-foot">
+                                <div class="z-feed-foot-l">
+                                        <span class="feed-btn-group">
+                                            <a href="javascript:" class="price-btn-up"><span class="unvoted-wrap"><i
+                                                    class="z-icon-zhi"></i><span>{{item.worthy}}</span></span></a>
+                                            <a href="javascript:" class="price-btn-down"><span class="unvoted-wrap"><i class="z-icon-buzhi"></i><span>{{item.unworthy}}</span></span></a>
+                                        </span>
+                                    <a class="z-group-data"><i class="z-icon-star-empty"></i><span>{{item.collection}}</span></a>
+                                    <a href="https://www.smzdm.com/p/8950865/#comments" class="z-group-data"><i class="z-icon-comment"></i>{{item.comment}}</a>
                                 </div>
-                                <span class="feed-block-extras">{{item.date}}<a href="http://www.smzdm.com/mall/amazon_jp/">{{item.mall}}</a></span>
+                                <div class="z-feed-foot-r">
+                                    <div class="feed-link-btn">
+                                        <div class="feed-link-btn-inner">
+                                            <a :href="item.url" class="z-btn z-btn-red">去购买</a>
+                                        </div>
+                                    </div>
+                                    <span class="feed-block-extras">{{item.date}}<a href="http://www.smzdm.com/mall/amazon_jp/">{{item.mall}}</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <script src="http://apps.bdimg.com/libs/vue/1.0.14/vue.js"></script>
@@ -125,32 +127,16 @@
     let currentMoment = new moment();
     let dayUnix = currentMoment.millisecond(0).second(0).minute(0).hour(0).valueOf();
     let yearUnix = new moment(String(currentMoment.year()), 'YYYY').valueOf();
-    let listVue = new Vue({
-        el: '#feed-main-list',
-        data: {
-            items: jsonItem,
-        },
-        filters: {
-            timeHandler: function (value) {
-                if (value > dayUnix) {
-                    return (new moment(value)).format('HH:mm');
-                } else if (value > yearUnix) {
-                    return (new moment(value)).format('MM-DD HH:mm');
-                } else {
-                    return (new moment(value)).format('YYYY-MM-DD HH:mm');
-                }
-            }
-        }
-    });
-    let searchVue = new Vue({
-        el: '#search-box',
+    let mainContent = new Vue({
+        el: '#main-content',
         data: {
             searchModel: '标题',
             sortModel: '时间',
             words: '',
             pageIndex: '',
             worthCount: '',
-            commentCount: ''
+            commentCount: '',
+            items: jsonItem
         },
         methods: {
             changeSearchModel: function (type) {
@@ -179,11 +165,22 @@
                     $('.dropdown-con').show();
                 }
             }
+        },
+        filters: {
+            timeHandler: function (value) {
+                if (value > dayUnix) {
+                    return (new moment(value)).format('HH:mm');
+                } else if (value > yearUnix) {
+                    return (new moment(value)).format('MM-DD HH:mm');
+                } else {
+                    return (new moment(value)).format('YYYY-MM-DD HH:mm');
+                }
+            }
         }
     });
 
     function setCategory() {
-        searchVue.words = categoryDrop.currentName;
+        mainContent.words = categoryDrop.currentName;
     }
 </script>
 </body>
