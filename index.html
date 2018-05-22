@@ -26,7 +26,8 @@
                <li><a href="javascript:" @click="changeSearchModel('目录')">目录</a></li>
              </ul>
            </span>
-            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="关键词" @keyup.enter="search" @click.stop="showCategory" :disabled="searchModel == '目录'">
+            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="关键词" @keyup.enter="search" @click.stop="showCategory"
+                   :readonly="searchModel == '目录'">
             <input type="number" v-model.number="pageIndex" class="search-input" placeholder="  页码数" @keyup.enter="search">
             <input type="number" v-model.number="worthCount" class="search-input" placeholder="  点值数" @keyup.enter="search">
             <input type="number" v-model.number="commentCount" class="search-input" placeholder="  评论数" @keyup.enter="search">
@@ -68,7 +69,7 @@
             </div>
         </div>
         <ul id="feed-main-list">
-            <li v-for="item in items">
+            <li v-for="item in items" v-if="item.worthy >= searchVue.worthCount && item.comment >= searchVue.commentCount">
                 <h5 class="feed-block-title">
                     <a :href="item.url">{{item.title}}<span class="z-highlight">{{item.price}}</span></a>
                 </h5>
@@ -154,6 +155,7 @@
         methods: {
             changeSearchModel: function (type) {
                 this.searchModel = type;
+                this.words = '';
             },
             changeSortModel: function (type) {
                 this.sortModel = type;
@@ -162,8 +164,15 @@
 
             },
             search: function () {
-                $.post('/article/proxy-list');
-                $.postJSON('/article/proxy-list', {})
+                $.postJSON('/article/proxy-list', {
+                    "keyWords": this.words,
+                    "page": this.pageIndex,
+                    "searchByCategory": this.searchModel === '目录'
+                },).then(x => {
+                    if (x.code === 0) {
+                        listVue.items = x.data;
+                    }
+                })
             },
             showCategory: function () {
                 if (this.searchModel === '目录') {
