@@ -133,7 +133,7 @@
             searchModel: '标题',
             sortModel: '时间',
             words: '',
-            pageIndex: '',
+            pageIndex: 1,
             worthCount: '',
             commentCount: '',
             items: jsonItem
@@ -156,7 +156,7 @@
                     "searchByCategory": this.searchModel === '目录'
                 },).then(x => {
                     if (x.code === 0) {
-                        listVue.items = x.data;
+                        mainContent.items = x.data;
                     }
                 })
             },
