@@ -15093,12 +15093,13 @@ let temp = [
     }
 ];
 
-let page = new Vue({
+let categoryDrop = new Vue({
     el: '.dropdown-con',
     data: {
         items: [],
         showIndex: 0,
-        currentSelected: 0
+        currentSelected: 0,
+        currentName:''
     },
     methods: {
         hover: function (index) {
@@ -15134,8 +15135,11 @@ let page = new Vue({
         setItem: function (temp) {
             this.items = temp;
         },
-        selectOne: function (categoryID) {
+        selectOne: function (categoryID,title) {
             this.currentSelected = categoryID;
+            this.currentName = title;
+            $('.dropdown-con').hide();
+            setCategory();
         }
     },
     computed: {
@@ -15161,4 +15165,5 @@ let page = new Vue({
         }
     }
 });
-page.setItem(temp);
+categoryDrop.setItem(temp);
+$('html').click(()=>$('.dropdown-con').hide());

@@ -26,7 +26,7 @@
                <li><a href="javascript:" @click="changeSearchModel('目录')">目录</a></li>
              </ul>
            </span>
-            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="关键词" @keyup.enter="search">
+            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="关键词" @keyup.enter="search" @click="showCategory">
             <input type="number" v-model.number="pageIndex" class="search-input" placeholder="  页码数" @keyup.enter="search">
             <input type="number" v-model.number="worthCount" class="search-input" placeholder="  点值数" @keyup.enter="search">
             <input type="number" v-model.number="commentCount" class="search-input" placeholder="  评论数" @keyup.enter="search">
@@ -40,7 +40,7 @@
              </ul>
            </span>
         </div>
-        <div class="dropdown-con" style="margin-left: 100px;top: 60px;">
+        <div class="dropdown-con" style="margin-left: 100px;top: 60px;" @click.stop="doThis">
             <ul class="drop-cate-list">
                 <li v-for="(index,item) in items" :data-id="item.ID" @mouseenter="hover(index)" :class="{ active: index == showIndex }">
                     <a href="javascript:">
@@ -53,11 +53,12 @@
                     <table class="drop-menus">
                         <tbody>
                         <tr v-for="(index2,children) in tempItem.child">
-                            <td class="drop-menu-title" @click="selectOne(children.ID)" :class="{ 'category-selected': children.ID==currentSelected }">
+                            <td class="drop-menu-title" @click="selectOne(children.ID,children.title)"
+                                :class="{ 'category-selected': children.ID==currentSelected }">
                                 <a href="javascript:" :data-id="children.ID">{{children.title}}</a><span class="split"></span>
                             </td>
                             <td class="drop-menu-items">
-                                <a href="javascript:" v-for="(index3,nodes) in children.child" :data-id="nodes.ID" @click="selectOne(nodes.ID)"
+                                <a href="javascript:" v-for="(index3,nodes) in children.child" :data-id="nodes.ID" @click="selectOne(nodes.ID,nodes.title)"
                                    :class="{ 'category-selected': nodes.ID==currentSelected }">{{nodes.title}}</a>
                             </td>
                         </tr>
@@ -161,10 +162,20 @@
 
             },
             search: function () {
-                $.post('/article/proxy-list')
+                $.post('/article/proxy-list');
+                $.postJSON('/article/proxy-list', {})
+            },
+            showCategory: function () {
+                if (this.searchModel === '目录') {
+                    $('.dropdown-con').show();
+                }
             }
         }
     });
+
+    function setCategory() {
+        searchVue.words = categoryDrop.currentName;
+    }
 </script>
 </body>
 </html>
