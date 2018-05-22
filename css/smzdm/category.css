@@ -11,6 +11,7 @@
     overflow: hidden;
     z-index: 99;
     margin-left: 20px;
+    display: none;
 }
 
 .dropdown-con .dropdown-r {

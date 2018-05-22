@@ -26,7 +26,7 @@
                <li><a href="javascript:" @click="changeSearchModel('目录')">目录</a></li>
              </ul>
            </span>
-            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="关键词" @keyup.enter="search" @click.stop="showCategory">
+            <input type="text" v-model="words" class="search-input" style="width: 125px;" placeholder="关键词" @keyup.enter="search" @click.stop="showCategory" :disabled="searchModel == '目录'">
             <input type="number" v-model.number="pageIndex" class="search-input" placeholder="  页码数" @keyup.enter="search">
             <input type="number" v-model.number="worthCount" class="search-input" placeholder="  点值数" @keyup.enter="search">
             <input type="number" v-model.number="commentCount" class="search-input" placeholder="  评论数" @keyup.enter="search">
